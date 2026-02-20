@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useCandidate } from './application/useCandidate';
+import './App.css';
+
+const CANDIDATE_EMAIL = import.meta.env.VITE_CANDIDATE_EMAIL;
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { candidate, isLoading, error } = useCandidate(CANDIDATE_EMAIL);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <main className="app-container">
+      <h1>Nimble Gravity Challenge</h1>
+      
+      <section className="candidate-info">
+        <h2>Mis Datos de Candidato</h2>
+        
+        {isLoading && <p>Cargando datos del candidato...</p>}
+        
+        {error && <p className="error-text">Error: {error}</p>}
+        
+        {candidate && (
+          <article className="card">
+            <p><strong>Nombre:</strong> {candidate.firstName} {candidate.lastName}</p>
+            <p><strong>Email:</strong> {candidate.email}</p>
+            <p><strong>Candidate ID:</strong> {candidate.candidateId}</p>
+          </article>
+        )}
+      </section>
+    </main>
+  );
 }
 
-export default App
+export default App;
