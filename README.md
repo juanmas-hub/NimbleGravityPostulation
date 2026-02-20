@@ -1,73 +1,31 @@
-# React + TypeScript + Vite
+# 🚀 Nimble Gravity - Frontend Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicación desarrollada como parte del proceso de selección para el rol de Junior Fullstack Developer en Nimble Gravity. 
 
-Currently, two official plugins are available:
+El proyecto es una SPA (Single Page Application) construida en React que interactúa con una API REST para validar datos de candidato, consultar posiciones abiertas y enviar una postulación formal a un puesto específico.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tecnologías Utilizadas
 
-## React Compiler
+* **React 18** (Vite)
+* **TypeScript** (Tipado estricto para modelos de dominio y respuestas de API)
+* **CSS Puro / Inline Styles** (Mantenido simple por requerimientos del challenge)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🏗 Arquitectura y Decisiones de Diseño
 
-## Expanding the ESLint configuration
+El código fue estructurado siguiendo principios de **Clean Architecture** y separación de responsabilidades para garantizar escalabilidad y fácil mantenimiento:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Domain (`/src/domain`)**: Contiene las interfaces e identidades de negocio puras (`Candidate`, `Job`), agnósticas a la UI o la red.
+2. **Infrastructure/Repository (`/src/repository` y `/src/utils`)**: Centraliza y abstrae las llamadas a la API (`fetch`). Los repositorios se encargan de orquestar los endpoints, mientras que los helpers compartidos manejan el parseo de datos y errores HTTP de forma declarativa.
+3. **Application (`/src/application` o `/src/hooks`)**: Custom Hooks (`useCandidate`, `useJobs`) que actúan como casos de uso, manejando el estado de la petición (loading, error, data) e inyectando los datos limpios a la vista.
+4. **Presentation (`/src/components` y `/src/sections`)**: Componentes de React altamente declarativos. Se utilizó un patrón *Smart/Container Component* (`App.tsx`) para manejar el estado global y *Dumb/Presentational Components* (`CandidateSection`, `JobsSection`) enfocados únicamente en renderizar la UI.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Instalación y Uso Local
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1. Clonar el repositorio:
+   ```bash
+   git clone [https://github.com/tu-usuario/tu-repo.git](https://github.com/tu-usuario/tu-repo.git)
+   cd tu-repo
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. Iniciar aplicación:
+   ```bash
+   npm run dev
