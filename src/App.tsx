@@ -1,32 +1,29 @@
 import { useCandidate } from './application/useCandidate';
+import { useJobs } from './application/useJob';
+import CandidateSection from './sections/CandidateSection';
+import JobsSection from './sections/JobSection';
 import './App.css';
 
 const CANDIDATE_EMAIL = import.meta.env.VITE_CANDIDATE_EMAIL;
 
-function App() {
-  const { candidate, isLoading, error } = useCandidate(CANDIDATE_EMAIL);
+export default function App() {
+  const { candidate, isLoading: isCandidateLoading, error: candidateError } = useCandidate(CANDIDATE_EMAIL);
+  const { jobs, isLoading: isJobsLoading, error: jobsError } = useJobs();
+
+  const handleApply = (jobId: string, repoUrl: string) => {
+    if (!candidate) return; 
+    console.log(`Aplicando al job ${jobId} con el repo: ${repoUrl} usando el UUID: ${candidate.uuid}`);
+  };
 
   return (
-    <main className="app-container">
+    <main className="app-container" style={{ maxWidth: '800px', margin: '0 auto', padding: '2rem' }}>
       <h1>Nimble Gravity Challenge</h1>
       
-      <section className="candidate-info">
-        <h2>Mis Datos de Candidato</h2>
-        
-        {isLoading && <p>Cargando datos del candidato...</p>}
-        
-        {error && <p className="error-text">Error: {error}</p>}
-        
-        {candidate && (
-          <article className="card">
-            <p><strong>Nombre:</strong> {candidate.firstName} {candidate.lastName}</p>
-            <p><strong>Email:</strong> {candidate.email}</p>
-            <p><strong>Candidate ID:</strong> {candidate.candidateId}</p>
-          </article>
-        )}
-      </section>
+      <CandidateSection candidate={candidate} isLoading={isCandidateLoading} error={candidateError} />
+
+      <hr style={{ margin: '2rem 0' }} />
+
+      <JobsSection jobs={jobs} isLoading={isJobsLoading} error={jobsError} onApply={handleApply} />
     </main>
   );
 }
-
-export default App;
