@@ -26,6 +26,15 @@ El código fue estructurado siguiendo principios de **Clean Architecture** y sep
    git clone [https://github.com/tu-usuario/tu-repo.git](https://github.com/tu-usuario/tu-repo.git)
    cd tu-repo
 
-2. Iniciar aplicación:
+2. Instalar dependencias:
+   ```bash
+   npm install
+
+4. Iniciar aplicación:
    ```bash
    npm run dev
+
+## ⚠️ Nota sobre Variables de Entorno (.env)
+Para este challenge, el archivo .env se ha incluido deliberadamente en el control de versiones para facilitar la revisión y prueba del código en entorno local por parte de los evaluadores de Nimble Gravity.
+
+En un escenario real de producción o si la aplicación estuviese desplegada, este archivo estaría estrictamente en el .gitignore y estas variables (VITE_API_BASE_URL, VITE_CANDIDATE_EMAIL) se configurarían de forma segura en los Environment Variables del servidor o plataforma de hosting
