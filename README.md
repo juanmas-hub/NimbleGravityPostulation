@@ -14,7 +14,7 @@ El proyecto es una SPA (Single Page Application) construida en React que interac
 
 1. Clonar el repositorio:
    ```bash
-   git clone [https://github.com/tu-usuario/tu-repo.git](https://github.com/tu-usuario/tu-repo.git)
+   git clone [https://github.com/juanmas-hub/NimbleGravityPostulation](https://github.com/juanmas-hub/NimbleGravityPostulation)
    cd tu-repo
 
 2. Instalar dependencias:
